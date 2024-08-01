@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="shortcut icon" href="/static/icon.png" type="image/x-icon">
+        <link rel="stylesheet" href="/static/styles.css">
+        <meta charset="UTF-8">
+        <title>Daily Expenses</title>
+    </head>
+    <body>
+        <center>
+            <h1><img src="/static/logo.png">Daily Expenses</h1>
+            <form method="POST" id="expense_details" style="line-height: 2.5;">
+                <table>
+                    <tr>
+                        <td>Date: </td>
+                        <td><input type="date" name="date"></td>
+                    </tr>
+                    <tr>
+                        <td>Category: </td>
+                        <td>
+                            <select id="expense_category" name="expense_category" onchange='divSelect()'>
+                                <option value="" disabled selected hidden>Choose your Category of Expense </option>
+                                <option value="Food">Food</option>
+                                <option value="Rent">Rent</option>
+                                <option value="Utilities">Utilities</option>
+                                <option value="Insurance">Insurance</option>
+                                <option value="Loan">Loan</option>
+                                <option value="Transportation">Transportation</option>
+                                <option value="Entertainment">Entertainment</option>
+                                <option value="Memberships">Memberships</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Item: </td>
+                        <td>
+                            <select name="expense_item" id="expense_item">
+                                <option value="" disabled selected hidden>Choose your Item of Expense </option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Amount: </td>
+                        <td><input type="text" name="amount"></td>
+                    </tr>
+                    <tr>
+                        <td><button type="submit" class="save_cancel" name="save">Save</button></td>
+                    </tr>
+                </table>
+            </form>
+            <div>
+                {% if added: %}
+                <p>The Expense has been added
+                <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span></p>
+                {% endif %}
+            </div>
+            {% if details: %}
+            <h2>Expenses List</h2>
+            <table class="after_submission">
+                <tr>
+                    <th style="width: 7%;">Date</th>
+                    <th style="width: 7%;">Category</th>
+                    <th style="width: 10%;">Item</th>
+                    <th style="width: 5%;">Amount</th>
+                </tr>
+                {% for count in range(row_count): %}
+                <tr>
+                    <td class="info">{{data[count][0]}}</td>
+                    <td class="info">{{data[count][1]}}</td>
+                    <td class="info">{{data[count][2]}}</td>
+                    <td class="info">{{data[count][3]}}</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td class="info"></td>
+                    <td class="info"></td>
+                    <td class="total">Total: </td>
+                    <td class="info">{{total}}</td>
+                </tr>
+            </table>
+            <br>
+            {% endif %}
+            <hr>
+            <h2>Monthly Expenses</h2>
+            <form method="post">
+                <button name="this_month" onclick="window.open('/monthly')">This month's Expenses</button>
+                <button name="last_month" onclick="window.open('/monthly')">Last month's Expenses</button>
+            </form>
+            <br><hr>
+            <h2>Expenses according to custom date</h2>
+            <form method="post">
+                <input type="date" name="start">
+                <input type="date" name="end">
+                <button type="submit" name="custom" onclick="window.open('/monthly')">Show</button>
+            </form>
+        </center>
+    </body>
+</html>
+<script src="/static/myscripts.js"></script>
